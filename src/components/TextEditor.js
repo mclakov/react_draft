@@ -1,9 +1,10 @@
 import React, {Component, useState} from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw, convertFromHTML  } from "draft-js";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
+import ContentState from "draft-js/lib/ContentState";
 
 // export default class TextEditor extends Component {
 //   state = {
@@ -64,7 +65,18 @@ import draftToHtml from "draftjs-to-html";
 const TextEditor = () => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [tempState, setTempState] = useState();
-      const onEditorStateChange = (editorState) => {
+    const HTML = {__html:draftToHtml(convertToRaw(editorState.getCurrentContent()))}
+
+    const sampleMarkup = '<b>Bold text</b>, <i>Italic text</i><br/ ><br />' + '<a href="http://www.facebook.com">Example link</a>';
+    const blocksFromHTML = convertFromHTML(sampleMarkup);
+    const state = ContentState.createFromBlockArray(
+        blocksFromHTML.contentBlocks,
+        blocksFromHTML.entityMap,
+    );
+
+
+
+    const onEditorStateChange = (editorState) => {
           setEditorState(editorState);
       };
 
@@ -82,13 +94,28 @@ const TextEditor = () => {
               setTempState(editorState);
           }}>Save</button>
           <button onClick={()=>{
-              console.log(tempState);
-              console.log(editorState);
-              console.log(editorState);
+              // console.log(tempState);
+              // console.log(editorState);
+              // setEditorState(tempState);
 
-              setEditorState(tempState)
+
+
+
+              // console.log("draftToHtml", draftToHtml(convertToRaw(editorState.getCurrentContent())));
+              setEditorState(EditorState.createWithContent(state));
+
 
           }}>Load</button>
+
+
+          <textarea
+                    value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
+                  ></textarea>
+
+          <div
+                        style={{border: "1px solid red"}}
+                        dangerouslySetInnerHTML={HTML}
+                    ></div>
       </div>
   );
 };
