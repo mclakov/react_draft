@@ -22,6 +22,10 @@ const Content = (props) => {
                 handleChangeText={props.handleChangeText}
                 cellSelected={props.cellSelected}
                 setCellSelected={props.setCellSelected}
+
+                tempText={props.tempText}
+                setTempText={props.setTempText}
+                setSelectedMenu={props.setSelectedMenu}
             />
         </div>
     );

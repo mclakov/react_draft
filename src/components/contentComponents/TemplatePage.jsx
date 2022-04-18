@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash';
 import Table from "./Table";
 import Text from "./Text";
 import Image from "./Image";
-import TextEditor from "../TextEditor";
+import TextEditor from "../menuComponents/textEditorMenu/TextEditor";
 
 const TemplatePage = (props) => {
 
@@ -16,19 +16,23 @@ const TemplatePage = (props) => {
     let arrElem = props.arrViewElems.map((elem,i)=> {
         if (elem.data.type === "text") {
             return (
-                // <Text
-                //     elem={elem}
-                //     selectedElem={props.selectedElem}
-                //     viewTextareaFlag={props.viewTextareaFlag}
-                //     changeText={props.changeText}
-                //     loadEditorData={props.loadEditorData}
-                //     setSelectedElem={props.setSelectedElem}
-                //     setViewTextareaFlag={props.setViewTextareaFlag}
-                //     edt={props.edt}
-                //     handleChangeText={props.handleChangeText}
-                // >
-                // </Text>
-                <TextEditor/>
+                <Text
+                    elem={elem}
+                    selectedElem={props.selectedElem}
+                    viewTextareaFlag={props.viewTextareaFlag}
+                    changeText={props.changeText}
+                    loadEditorData={props.loadEditorData}
+                    setSelectedElem={props.setSelectedElem}
+                    setViewTextareaFlag={props.setViewTextareaFlag}
+                    edt={props.edt}
+                    handleChangeText={props.handleChangeText}
+
+                    tempText={props.tempText}
+                    setTempText={props.setTempText}
+                    setSelectedMenu={props.setSelectedMenu}
+                >
+                </Text>
+                // <TextEditor/>
             )
         }
         if (elem.data.type === "table") {
@@ -70,6 +74,10 @@ const TemplatePage = (props) => {
         <div className={"templatePage"}
              onClick={()=>{
                  props.setViewTextareaFlag("none");
+
+
+                 props.setSelectedMenu("main");
+
              }}
         >
             templatePage

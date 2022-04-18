@@ -1,9 +1,8 @@
 import React from 'react';
 import MenuNav from'./menuComponents/MenuNav';
-import MenuPage from'./menuComponents/MenuPage';
-import MenuTable from'./menuComponents/MenuTable';
-import MenuText from'./menuComponents/MenuText';
-import MenuBind from'./menuComponents/MenuBind';
+import MenuMain from "./menuComponents/MenuMain";
+import MenuTextEditor from "./menuComponents/MenuTextEditor";
+
 
 
 
@@ -12,17 +11,22 @@ const Menu = (props) => {
     return (
         <div className={"menu"}>
             <MenuNav
-
+                selectedMenu={props.selectedMenu}
+                setSelectedMenu={props.setSelectedMenu}
             />
-            <MenuText
+            <MenuMain
+                selectedMenu={props.selectedMenu}
                 loadEditorData={props.loadEditorData}
                 edt={props.edt}
             />
-            <MenuTable/>
-            <MenuPage/>
-            <MenuBind
-                loadEditorData={props.loadEditorData}
+            <MenuTextEditor
                 edt={props.edt}
+                selectedMenu={props.selectedMenu}
+                setSelectedMenu={props.setSelectedMenu}
+                tempText={props.tempText}
+                setTempText={props.setTempText}
+                selectedElem={props.selectedElem}
+                loadEditorData={props.loadEditorData}
             />
         </div>
     );

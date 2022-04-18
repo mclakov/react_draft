@@ -34,18 +34,38 @@ body {
     grid-area: menu;
     display: grid;
     grid-template-rows: 20px 1fr;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr;
     grid-gap: 5px;
 }
+
+
+
+
 
 .menuNav {
     background-color: var(--menu-color);
     outline: 1px solid black;
     grid-area: menuNav;
     grid-column-start: 1;
-    grid-column-end: 5;
+    grid-column-end: 1;
     grid-row-start: 1;
     grid-row-end: 2;
+}
+
+
+
+.menuMain {
+    background-color: var(--background-color);
+    outline: 1px solid black;
+    grid-area: menuMain;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5px;
 }
 
 .menuText {
@@ -54,8 +74,8 @@ body {
     grid-area: menuText;
     grid-column-start: 1;
     grid-column-end: 2;
-    grid-row-start: 2;
-    grid-row-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
 }
 
 .menuTable {
@@ -64,8 +84,8 @@ body {
     grid-area: menuTable;
     grid-column-start: 2;
     grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
 }
 
 .menuPage {
@@ -74,8 +94,8 @@ body {
     grid-area: menuPage;
     grid-column-start: 3;
     grid-column-end: 4;
-    grid-row-start: 2;
-    grid-row-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
 }
 
 .menuBind {
@@ -84,8 +104,8 @@ body {
     grid-area: menuBind;
     grid-column-start: 4;
     grid-column-end: 5;
-    grid-row-start: 2;
-    grid-row-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
 }
 
 .content {
@@ -120,3 +140,20 @@ button {
     cursor: pointer;
 }
 
+.menuNav {
+    display: flex;
+    gap: 10px;
+}
+
+
+
+.editorClassName {
+    border: 1px solid;
+    position: absolute;
+    width: 600px;
+    height: 300px!important;
+    z-index: 2;
+    top: 200px;
+    left: 450px;
+    background-color: white;
+}

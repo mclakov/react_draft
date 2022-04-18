@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState} from "react";
 import "./App.css";
-import TextEditor from "./components/TextEditor";
+import TextEditor from "./components/menuComponents/textEditorMenu/TextEditor";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Content from "./components/Content";
@@ -25,7 +25,7 @@ function App() {
         {
             id: "id",
             data:   {
-                type:"text",
+                type:"",
                 position: {
                     x: 0,
                     y: 0,
@@ -42,6 +42,8 @@ function App() {
             }
         }
     });
+    const [selectedMenu, setSelectedMenu] = useState("main");
+    const [tempText, setTempText] = useState("TEMP_TEXT");
 
 
 
@@ -85,6 +87,11 @@ function App() {
             setCellSelected={setCellSelected}
             setViewTextareaFlag={setViewTextareaFlag}
             setBold={setBold}
+            selectedMenu={selectedMenu}
+            setSelectedMenu={setSelectedMenu}
+            tempText={tempText}
+            setTempText={setTempText}
+
         />
         <Content
             setViewTextareaFlag={setViewTextareaFlag}
@@ -99,6 +106,9 @@ function App() {
             handleChangeText={handleChangeText}
             cellSelected={cellSelected}
             setCellSelected={setCellSelected}
+            tempText={tempText}
+            setTempText={setTempText}
+            setSelectedMenu={setSelectedMenu}
         />
         <Footer/>
       {/*<div className="editor">*/}
