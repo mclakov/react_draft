@@ -35,7 +35,7 @@ const MenuNav = (props) => {
             <div
                 id="text"
                 style={{backgroundColor: props.selectedMenu === "text" ? "#f1f1f1" : "#61dafb"}}
-                onClick={selectMenu}
+
             >Текст</div>
         </div>
     );

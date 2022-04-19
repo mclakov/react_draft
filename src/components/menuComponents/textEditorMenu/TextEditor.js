@@ -42,32 +42,31 @@ const TextEditor = (props) => {
             wrapperClassName="wrapperClassName"
             editorClassName="editorClassName"
             onEditorStateChange={onEditorStateChange}
+            onBlur={()=>{
+                props.edt.changeText(props.selectedElem.id, draftToHtml(convertToRaw(editorState.getCurrentContent())));
+                props.loadEditorData();
+                props.setSelectedMenu("main");
+            }}
         />
-{/*//**************************************************8*/}
-
-          <button onClick={()=>{
-              setEditorState(EditorState.createWithContent(tempState));
-          }}>Load</button>
-
-          <button onClick={()=>{
-              props.edt.changeText (props.selectedElem.id, draftToHtml(convertToRaw(editorState.getCurrentContent())));
-              props.loadEditorData();
-              props.setSelectedMenu("main");
-          }}>Save</button>
-
-
-          {/*<textarea*/}
-          {/*          value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}*/}
-          {/*        ></textarea>*/}
-          {/*<div*/}
-          {/*              style={{border: "1px solid red"}}*/}
-          {/*              dangerouslySetInnerHTML={HTML}*/}
-          {/*          ></div>*/}
-
-          {/*//**************************************************8*/}
-
-
-
+            {/*/!****************************************************!/*/}
+            {/*          <button onClick={()=>{*/}
+            {/*              setEditorState(EditorState.createWithContent(tempState));*/}
+            {/*          }}>Load</button>*/}
+            {/*          <button onClick={()=>{*/}
+            {/*              props.edt.changeText(props.selectedElem.id, draftToHtml(convertToRaw(editorState.getCurrentContent())));*/}
+            {/*              props.loadEditorData();*/}
+            {/*              props.setSelectedMenu("main");*/}
+            {/*          }}>Save</button>*/}
+            {/*          <textarea*/}
+            {/*              value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}*/}
+            {/*          >*/}
+            {/*          </textarea>*/}
+            {/*            <div*/}
+            {/*                style={{border: "1px solid red"}}*/}
+            {/*                dangerouslySetInnerHTML={HTML}*/}
+            {/*            >*/}
+            {/*            </div>*/}
+            {/*/!****************************************************!/*/}
       </div>
   );
 };
