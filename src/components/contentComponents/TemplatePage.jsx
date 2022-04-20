@@ -9,6 +9,18 @@ import TextEditor from "../menuComponents/textEditorMenu/TextEditor";
 const TemplatePage = (props) => {
 
 
+    // elem={elem}++
+    // selectedElem={props.selectedElem}--
+    // viewTextareaFlag={props.viewTextareaFlag}--
+    // changeText={props.changeText}--
+    // loadEditorData={props.loadEditorData}--
+    // setSelectedElem={props.setSelectedElem}++
+    // setViewTextareaFlag={props.setViewTextareaFlag}--
+    // edt={props.edt}++
+    // handleChangeText={props.handleChangeText}--
+    // tempText={props.tempText}--
+    // setTempText={props.setTempText}++
+    // setSelectedMenu={props.setSelectedMenu}++
 
 
 
@@ -18,21 +30,12 @@ const TemplatePage = (props) => {
             return (
                 <Text
                     elem={elem}
-                    selectedElem={props.selectedElem}
-                    viewTextareaFlag={props.viewTextareaFlag}
-                    changeText={props.changeText}
-                    loadEditorData={props.loadEditorData}
                     setSelectedElem={props.setSelectedElem}
-                    setViewTextareaFlag={props.setViewTextareaFlag}
                     edt={props.edt}
-                    handleChangeText={props.handleChangeText}
-
-                    tempText={props.tempText}
                     setTempText={props.setTempText}
                     setSelectedMenu={props.setSelectedMenu}
                 >
                 </Text>
-                // <TextEditor/>
             )
         }
         if (elem.data.type === "table") {

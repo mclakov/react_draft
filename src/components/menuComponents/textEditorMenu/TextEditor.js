@@ -16,8 +16,6 @@ const TextEditor = (props) => {
         blocksFromHTML.entityMap,
     );
 
-
-
     const [editorState, setEditorState] = useState(EditorState.createWithContent(tempState));
 
     // const HTML = {__html:draftToHtml(convertToRaw(editorState.getCurrentContent()))}
@@ -35,7 +33,7 @@ const TextEditor = (props) => {
 
 
   return (
-      <div className="">
+      <div className="textEditor">
         <Editor
             editorState={editorState}
             toolbarClassName="toolbarClassName"

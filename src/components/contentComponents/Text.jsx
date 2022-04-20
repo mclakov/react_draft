@@ -6,11 +6,9 @@ const Text = (props) => {
         return ({__html: props.elem.data.textData});
     };
 
-
-
-    return (<div>
+    return (
             <div
-                className="arrViewElems"
+                className="textElem"
                 style={{
                     position: "relative",
                     top: props.elem.data.position.y + "px",
@@ -21,33 +19,11 @@ const Text = (props) => {
                     props.setSelectedElem(props.edt.getPropsSelectedElement(props.elem.id));
                 }}
                 onDoubleClick={() => {
-                    // props.setViewTextareaFlag("");//удалить
-
-
-
-
                     props.setTempText(props.elem.data.textData);//переделать без props
                     props.setSelectedMenu("text");
                 }}
                 dangerouslySetInnerHTML={createText()}
             >
-            </div>
-            {/*<textarea*/}
-            {/*    style={{*/}
-            {/*        position: "absolute",*/}
-            {/*        top: props.selectedElem.data.position.y + "px",*/}
-            {/*        left: props.selectedElem.data.position.x + "px",*/}
-            {/*        display: props.viewTextareaFlag,*/}
-            {/*    }}*/}
-            {/*    value={props.selectedElem.data.textData}*/}
-            {/*    onChange={(e)=>{*/}
-            {/*        props.handleChangeText(e.target.value);*/}
-            {/*    }}*/}
-            {/*    onClick={(e)=>{*/}
-            {/*        e.stopPropagation();*/}
-            {/*        e.preventDefault();*/}
-            {/*    }}*/}
-            {/*/>*/}
         </div>
     );
 };
