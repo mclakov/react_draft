@@ -6,20 +6,19 @@ import Content from "./components/Content";
 import Menu from "./components/Menu";
 import { cloneDeep } from 'lodash';
 import {Editor} from "./Editor";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import BindModalWindow from "./components/modalComponents/BindModalWindow";
 
 const  edt = new Editor();
 
 function App() {
 
-    // const [dataEditor, setDataEditor] = useState();
     const [cellSelected, setCellSelected] = useState({
         posInArrViewElems: "",
         keyInObj: "",
         indexTableArr: "",
         selected: false,
     });
-    // const [tableCellValue, setTableCellValue] = useState('');
-    // const [viewTextareaFlag, setViewTextareaFlag] = useState("none");
     const [arrViewElems, setArrViewElems] = useState([
         {
             id: "id",
@@ -43,75 +42,61 @@ function App() {
     });
     const [selectedMenu, setSelectedMenu] = useState("main");
     const [tempText, setTempText] = useState("TEMP_TEXT");
+    const [showBindModalWindow, setShowBindModalWindow] = useState(false);
+    const [bindArray, setBindArray] = useState(edt.loadBindArr());
 
 
 
 
-    function handleChange (e, index, indexTableArr, keyInObj) {
+    const handleChange = (e, index, indexTableArr, keyInObj) => {
         let newArr = cloneDeep(arrViewElems);
         newArr[index].data.tableData[indexTableArr][keyInObj] = e.target.value;
         setArrViewElems(newArr);
     };
 
-    // function handleChangeText (value) {
-    //     let newObj = cloneDeep(selectedElem);
-    //     newObj.data.textData = value;
-    //     setSelectedElem(newObj);
-    //     edt.changeText(selectedElem.id, value);
-    //     loadEditorData();
-    // };
-
-    function loadEditorData () {
+    const loadEditorData = () => {
         let newArr = cloneDeep(edt.loadTemplateArrElem());
         setArrViewElems(newArr);
     };
 
-    // function setBold(selectedText) {
-    //     let newObj = cloneDeep(selectedElem);
-    //     newObj.data.textData = selectedElem.data.textData.replace(selectedText, `<b>${selectedText}</b>`);
-    //     setSelectedElem(newObj);
-    //     edt.changeText(selectedElem.id, newObj.data.textData);
-    //     loadEditorData();
-    // };
+    const loadBindData = () => {
+        setBindArray(edt.loadBindArr());
+    };
 
   return (
     <div className="App">
         <Header/>
         <Menu
-            // setArrViewElems={setArrViewElems}
+            showBindModalWindow={showBindModalWindow}
+            setShowBindModalWindow={setShowBindModalWindow}
             loadEditorData={loadEditorData}
             edt={edt}
             selectedElem={selectedElem}
             cellSelected={cellSelected}
             setCellSelected={setCellSelected}
-            // setViewTextareaFlag={setViewTextareaFlag}
-            // setBold={setBold}
             selectedMenu={selectedMenu}
             setSelectedMenu={setSelectedMenu}
             tempText={tempText}
             setTempText={setTempText}
         />
+        <BindModalWindow
+            edt={edt}
+            bindArray={bindArray}
+            showBindModalWindow={showBindModalWindow}
+            setShowBindModalWindow={setShowBindModalWindow}
+            loadBindData={loadBindData}
+        />
         <Content
-            // setViewTextareaFlag={setViewTextareaFlag}
             arrViewElems={arrViewElems}
-            // selectedElem={selectedElem}
-            // viewTextareaFlag={viewTextareaFlag}
-            // changeText={edt.changeText}
-            // loadEditorData={loadEditorData}
             setSelectedElem={setSelectedElem}
             edt={edt}
             handleChange={handleChange}
-            // handleChangeText={handleChangeText}
             cellSelected={cellSelected}
             setCellSelected={setCellSelected}
-            // tempText={tempText}
             setTempText={setTempText}
             setSelectedMenu={setSelectedMenu}
         />
         <Footer/>
-      {/*<div className="editor">*/}
-      {/*  <TextEditor />*/}
-      {/*</div>*/}
     </div>
   );
 }

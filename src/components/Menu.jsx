@@ -15,6 +15,8 @@ const Menu = (props) => {
                 setSelectedMenu={props.setSelectedMenu}
             />
             <MenuMain
+                showBindModalWindow={props.showBindModalWindow}
+                setShowBindModalWindow={props.setShowBindModalWindow}
                 selectedMenu={props.selectedMenu}
                 loadEditorData={props.loadEditorData}
                 edt={props.edt}

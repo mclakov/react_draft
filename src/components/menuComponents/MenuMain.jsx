@@ -20,6 +20,8 @@ const MenuMain = (props) => {
             <MenuTable/>
             <MenuPage/>
             <MenuBind
+                showBindModalWindow={props.showBindModalWindow}
+                setShowBindModalWindow={props.setShowBindModalWindow}
                 loadEditorData={props.loadEditorData}
                 edt={props.edt}
             />

@@ -15,6 +15,19 @@ const EMPTY_TEMPLATE = {
             left: "",
         }
     },
+    BIND_ARRAY: [
+        {
+            id: nanoid(),
+            bindName: "{time}",
+            // value: new Date(),
+            value: "04/04/2022",
+        },
+        {
+            id: nanoid(),
+            bindName: "{title}",
+            value: "***TITLE 1****",
+        }
+    ],
 };
 
 const EMPTY_ELEMENT = {
@@ -25,17 +38,19 @@ const EMPTY_ELEMENT = {
     type: "",
 };
 
-const BIND_ARRAY = [
-    {
-        bindName: "{time}",
-        // value: new Date(),
-        value: "04/04/2022",
-    },
-    {
-        bindName: "{title}",
-        value: "***TITLE 1****",
-    }
-];
+// const BIND_ARRAY = [
+//     {
+//         id: nanoid(),
+//         bindName: "{time}",
+//         // value: new Date(),
+//         value: "04/04/2022",
+//     },
+//     {
+//         id: nanoid(),
+//         bindName: "{title}",
+//         value: "***TITLE 1****",
+//     }
+// ];
 
 
 class Element {
@@ -171,14 +186,40 @@ class Editor {
         return  this.template.data;
     }
 
-    addBind() {
-        console.log("addBind");
+    loadBindArr() {
+        return  this.template.BIND_ARRAY;
+    }
+
+    addBind(bindName, value) {
+        this.template.BIND_ARRAY.push(
+            {
+                id: nanoid(),
+                bindName: "{" + bindName + "}",
+                value: value,
+            }
+        )
+        console.log("add new bind", bindName, value)
+    }
+
+    delBind(id) {
+        let index = this.template.BIND_ARRAY.findIndex(el => el.id === id);
+        if(index === -1) {
+            console.log('Ошибка привязки. Неверный ID элемента')
+        }
+        else {
+            this.template.BIND_ARRAY.splice(index, 1)
+        }
+    }
+
+
+    applyBinds() {
+        console.log("applyBinds");
         console.log("this.template.data.", this.template.data);
 
 
         this.template.data.map(elem => {
             if (elem.data.type === "text") {
-                BIND_ARRAY.map (bind => {
+                this.template.BIND_ARRAY.map (bind => {
                     let pos = 0;
                     while (true) {
                         let bindStart = elem.data.textData.indexOf(bind.bindName, pos);

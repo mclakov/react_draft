@@ -5,6 +5,7 @@ import Table from "./Table";
 import Text from "./Text";
 import Image from "./Image";
 import TextEditor from "../menuComponents/textEditorMenu/TextEditor";
+import BindModalWindow from "../modalComponents/BindModalWindow";
 
 const TemplatePage = (props) => {
 
@@ -76,7 +77,7 @@ const TemplatePage = (props) => {
     return (
         <div className={"templatePage"}
              onClick={()=>{
-                 props.setViewTextareaFlag("none");
+                 // props.setViewTextareaFlag("none");
 
 
                  props.setSelectedMenu("main");

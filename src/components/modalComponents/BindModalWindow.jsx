@@ -1,91 +1,68 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Modal, Form} from "react-bootstrap";
-import Button from "../Components/Button";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library  } from '@fortawesome/fontawesome-svg-core';
-import { faTrash, faPlus,} from '@fortawesome/free-solid-svg-icons';
-import { nanoid } from 'nanoid';
-import {useState} from "react";
-import { cloneDeep, find, extend } from 'lodash';
+// import {useState} from "@types/react";
 
-library.add(faTrash, faPlus);
 
 const BindModalWindow = (props) => {
-// const BindModalWindow = ({bindArr = tempBindArr }) => {
 
-    let [newBindName, setNewBindName] = useState();
-    let [newBindType, setNewBindType] = useState();
-    let [newBindValue, setNewBindValue] = useState();
+    const [newBindName, setNewBindName] = useState("");
+    const [newBindValue, setNewBindValue] = useState("");
+    const [selectedBind, setSelectedBind] = useState("");
 
-    let styleInput = {
-        outline: "1px solid red",
+    // useEffect(() => {
+    //     setNewBindName("");
+    //     setNewBindValue("");
+    //     setSelectedBind("");
+    // }, [props.bindArray]);//почему не работает?
+
+
+    const checkBindName = () => {
+        props.bindArray.map ((elem, index) => {
+            if("{"+newBindName+"}" == elem.bindName) {
+                alert("Имя занято! Выберите другое")
+                setNewBindName("");
+            };
+        })
     }
 
-
-
-
-    function delTr (e, id) {
-        let posArr =  props.bindArr.map((e, i) => e.id);
-        let pos = (posArr.indexOf(id));//позиция id в массиве
-        let tempArr  = cloneDeep(props.bindArr);//копирование массива
-        tempArr.splice(pos,1);
-        props.setBindArr(tempArr);
+    const createBindTable = () => {
+        let tbody = [];
+        props.bindArray.map ((elem, index) => {
+            let tableBindName = elem.bindName.slice(1, -1)
+            tbody.push(<tr>
+                <td
+                    id={elem.id}
+                    style={{outline: (selectedBind === elem.id) ? "1px solid red" : "none"}}
+                    onClick={(e)=>setSelectedBind(e.target.id)}
+                >{tableBindName}</td>
+                <td>{elem.value}</td>
+            </tr>)
+        });
+        return (<table>
+            <tr>
+                <th>Название привязки</th>
+                <th>Значение</th>
+            </tr>
+            {tbody}
+            <tr>
+                <td><input
+                    value={newBindName}
+                    onChange={e => {
+                        setNewBindName(e.target.value);
+                    }}
+                    onBlur={()=>{
+                        checkBindName()
+                    }}
+                    // onFocus={}
+                /></td>
+                <td><input
+                    value={newBindValue}
+                    onChange={e => setNewBindValue(e.target.value)}
+                /></td>
+            </tr>
+        </table>)
     };
 
-
-
-    function createArr() {
-        console.log("props.bindArr", props.bindArr);
-        if (props.bindArr === undefined){
-            return;
-        }
-        else {
-            return( props.bindArr.map((item, index) => {
-                    let arrValue = [];
-                    for (let key in item.data) {
-                        arrValue.push(item.data[key]);
-
-                    };
-                    arrValue = arrValue.map ((i)=>
-                        (<td>{i}</td>)
-                    )
-                    return (
-                        <tr key={index} id={item.id}>
-                            {arrValue}
-                            <Button id={item.id} buttonName={<FontAwesomeIcon icon="trash" />} classNameBtn={props.classNameBtn} buttonHandler={delTr}/>
-                        </tr>
-                    )
-                }
-            ))
-        };
-    };
-
-    function handleChange (e) {
-        if (e.target.id === "inputBindName"){
-            setNewBindName(e.target.value);
-        }
-        if (e.target.id === "inputBindType"){
-            setNewBindType(e.target.value);
-        }
-        if (e.target.id === "inputBindValue"){
-            setNewBindValue(e.target.value);
-        }
-    };
-
-    function addNewBind() {
-        let newBindObj = {
-            id: nanoid(),
-            data: {
-                name: newBindName,
-                type: newBindType,
-                value: newBindValue,
-                pls:"",
-            },
-        };
-        let tempArr  = cloneDeep(props.bindArr);//копирование массива
-        tempArr.push (newBindObj);
-        props.setBindArr(tempArr);
-    };
 
 
 
@@ -98,61 +75,42 @@ const BindModalWindow = (props) => {
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                onHide={props.closeBindWindowHandler}
+                show={props.showBindModalWindow}
+                onHide={() => props.setShowBindModalWindow(!props.showBindModalWindow)}
             >
-                <Modal.Header closeButton>
+                <Modal.Header
+                    closeButton
+                >
                     <Modal.Title id="contained-modal-title-vcenter">
                         Привязки
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <table style={{width: "100%"}}>
-                        <tr>
-                            <th>Имя</th>
-                            <th>Тип</th>
-                            <th>Значение</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        {createArr()}
-                        <td>
-                            <input
-                                type={"text"}
-                                value={newBindName}
-                                onChange={handleChange}
-                                id="inputBindName"
-                            />
-                        </td>
-                        <td>
-                            <Form.Select id="inputBindType" aria-label="Default select example" onChange={handleChange}>
-                                <option selected value="Text">Text</option>
-                                <option value="Date">Date</option>
-                            </Form.Select>
-                        </td>
-                        <td>
-                            <input
-                                type={"text"}
-                                value={newBindValue}
-                                onChange={handleChange}
-                                id="inputBindValue"
-                            />
-                        </td>
-                        <td>
-                            <Button
-                                buttonName={<FontAwesomeIcon icon="plus" />}
-                                classNameBtn={props.classNameBtn}
-                                buttonHandler={props.closeBindWindowHandler}
-                                buttonHandler={()=>{
-                                    addNewBind();
-                                    // props.closeTemplateWindowHandler();
-                                }}
-                            />
-                        </td>
-                    </table>
+                    {createBindTable()}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button buttonName={"Применить"} buttonHandler={props.closeBindWindowHandler} classNameBtn={"btn btn-primary"}/>
-                    <Button buttonName={"Закрыть"} buttonHandler={props.closeBindWindowHandler} classNameBtn={"btn btn-danger"}/>
+                    <button
+                        // onClick={()=>props.setShowBindModalWindow(false)}
+                        disabled = {(newBindValue == "" || newBindName == "") ? true : false}
+                        onClick={()=> {
+                            props.edt.addBind(newBindName, newBindValue);
+                            props.loadBindData();
+                            setNewBindName("");
+                            setNewBindValue("");
+                            setSelectedBind("");
+                        }}
+                    >Добавить привязку</button>
+                    <button
+                        disabled = {(selectedBind == "") ? true : false}
+                        onClick={()=> {
+                            props.edt.delBind(selectedBind);
+                            props.loadBindData();
+                            props.loadBindData();
+                            setNewBindName("");
+                            setNewBindValue("");
+                            setSelectedBind("");
+                        }}
+                    >Удалить привязку</button>
                 </Modal.Footer>
             </Modal>
         </div>
