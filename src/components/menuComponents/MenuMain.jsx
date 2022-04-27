@@ -17,7 +17,10 @@ const MenuMain = (props) => {
                 loadEditorData={props.loadEditorData}
                 edt={props.edt}
             />
-            <MenuTable/>
+            <MenuTable
+                loadEditorData={props.loadEditorData}
+                edt={props.edt}
+            />
             <MenuPage/>
             <MenuBind
                 showBindModalWindow={props.showBindModalWindow}
